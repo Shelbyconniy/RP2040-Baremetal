@@ -1,0 +1,172 @@
+
+.syntax unified
+.cpu cortex-m0plus
+.thumb
+
+.section .boot2, "ax"
+
+.extern _stack0_top
+.extern Reset_Handler
+
+.equ qspi_base,     0x40020000
+
+.equ sclk_mask,    ~(3 << 4 | 1 << 0) @ 1100 1110
+.equ fast_8mA,      (2 << 4 | 1 << 0) @ 0x21 = 0010 0001
+
+.equ sd_mask,      ~(3 << 4 | 3 << 0) @ 1100 1100
+
+.equ ssi_base,      0x18000000
+.equ ssi_spi,       0x180000F4
+
+.equ size_8,        (7 << 16)
+
+.equ ctrl0_set,     (3 << 8) | (31 << 16) | (2 << 21)
+.equ spi_set1,      (8 << 2) | (2 << 8) | (4 << 11) | (1 << 0)
+.equ spi_set2,      (8 << 2) | (0 << 8) | (0xA0 << 24) | (4 << 11) | (2 << 0)       
+
+.global boot2
+.type boot2, %function
+.thumb_func
+boot2:
+
+    @ qspi init
+    @ Set 8mA, slew-rate fast
+
+    @ SCLK
+    ldr r0, =qspi_base
+    ldr r1, [r0, #0x04]
+    ldr r2, =sclk_mask
+    ands r1, r2
+    ldr r2, =fast_8mA
+    orrs r1, r2
+    str r1, [r0, #0x04]
+
+    @SD0
+    ldr r1, [r0, #0x08]
+    ldr r2, =sd_mask
+    ands r1, r2
+    ldr r2, =fast_8mA
+    orrs r1, r2
+    str r1, [r0, #0x08]
+
+    @SD1
+    str r1, [r0, #0x0C]
+
+    @SD2
+    str r1, [r0, #0x10]
+
+    @SD3
+    str r1, [r0, #0x14]
+
+
+    @ ssi init
+
+    movs r1, #0
+    ldr r0, =ssi_base
+    str r1, [r0, #0x08]
+
+    movs r1, #4
+    str r1, [r0, #0x14]
+
+    ldr r1, =size_8
+    str r1, [r0]
+
+    movs r1, #1
+    str r1, [r0, #0x08]
+    
+    movs r1, #5
+    str r1, [r0, #0x60]
+
+    movs r1, #0x35
+    str r1, [r0, #0x60]
+
+    movs r4, #1
+    movs r5, #4
+
+.wait_ssi_busy_1:
+
+    ldr r1, [r0, #0x28]
+
+    tst r1, r5
+    beq .wait_ssi_busy_1
+
+    tst r1, r4
+    bne .wait_ssi_busy_1
+    
+    ldr r2, [r0, #0x60]
+    ldr r3, [r0, #0x60]
+
+    movs r1, #2
+
+    ands r1, r3
+    
+    movs r4, #2
+    tst r1, r4
+    bne .continue
+
+    movs r1, #0x06
+    str r1, [r0, #0x60]
+    movs r1, #0x01
+    str r1, [r0, #0x60]
+    str r2, [r0, #0x60]
+
+    orrs r3, r4
+    str r3, [r0, #0x60]
+
+    movs r1, #0x04
+    str r1, [r0, #0x60]
+
+.continue:
+    movs r2, #0
+    movs r3, #1
+    str r2, [r0, #0x08]
+
+    ldr r1, =ctrl0_set
+    str r1, [r0]
+
+    ldr r0, =ssi_spi
+    ldr r1, =spi_set1
+    str r1, [r0]
+
+    ldr r0, =ssi_base
+    str r3, [r0, #0x08]
+
+    movs r1, #0xEB
+    str r1, [r0, #0x60]
+    movs r1, #0xA0
+    str r1, [r0, #0x60]
+
+    movs r4, #1
+    movs r5, #4
+
+.wait_ssi_busy_2:
+    ldr r1, [r0, #0x28]
+
+    tst r1, r5
+    beq .wait_ssi_busy_2
+    
+    tst r1, r4
+    bne .wait_ssi_busy_2
+
+    str r2, [r0, #0x08]
+
+    ldr r0, =ssi_spi
+    ldr r1, =spi_set2
+    str r1, [r0]
+
+    ldr r0, =ssi_base
+    str r3, [r0, #0x08]
+    
+    @ set SP
+    ldr r0, =_stack0_top
+    msr msp, r0
+
+    @ call Reset_Handler
+    ldr r0, =Reset_Handler
+    blx r0
+
+    @ end of boot2
+
+
+
+
