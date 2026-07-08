@@ -53,7 +53,7 @@ void core0_main()
 //     gpio_mode_output(LED);
 
 //     while (1) {
-//         sleep_ms(1000);
+//         sleep_ms(1000, ALARM0);
 //         gpio_invert(LED);
 //     }
 // }
