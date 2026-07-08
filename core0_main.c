@@ -9,10 +9,10 @@
 
 #define LED             25
 #define GPIO_FUNC       5
-#define ALARM0          0
 #define MAILBOX_CMD_0   0
 
 extern void core1_main();
+
 
 void core0_main()
 {
@@ -42,3 +42,18 @@ void core0_main()
     }
 
 }
+
+// void core0_main()
+// {
+//     enable_devices(GPIO_RST | TIMER_RST);
+	
+//     NVIC_EnableIRQ(TIMER_IRQ_0);
+
+//     pinmux_set(LED, GPIO_FUNC);
+//     gpio_mode_output(LED);
+
+//     while (1) {
+//         sleep_ms(1000);
+//         gpio_invert(LED);
+//     }
+// }
