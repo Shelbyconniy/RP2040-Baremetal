@@ -2,9 +2,6 @@
 #include "mmio.h"
 #include "sys_reg.h"
 
-#define GPIO_SPINLOCK   2
-#define DMA_SPINLOCK    3
-
 #define SPINLOCK_STATUS_REG (SIO_BASE + 0x05C)
 
 /* Spinlocks (0-31) registers */
