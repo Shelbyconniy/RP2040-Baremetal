@@ -51,7 +51,7 @@
 /* [23:22] Interrupt 26 */
 /* [31:30] Interrupt 27 */
 
-#define NVIC_IRQ_PR7        (NVIC_BASE + 0xE41C) // RW
+#define NVIC_IRQ_PR7        (CORTEX_BASE + 0xE41C) // RW
 // /* [7:6]   Interrupt 28 */
 // /* [15:14] Interrupt 29 */
 // /* [23:22] Interrupt 30 */
@@ -60,35 +60,35 @@
 /* Interrupt vector table pointer */
 #define VTOR_ADDR           (CORTEX_BASE + 0xED08)
 
-#define IRQ_OFFSET  16
+#define IRQ_OFFSET          16
 
 /* IRQ definitions */
-#define TIMER_IRQ_0 0
-#define TIMER_IRQ_1 1
-#define TIMER_IRQ_2 2
-#define TIMER_IRQ_3 3
-#define PWM_IRQ     4
-#define USB_IRQ     5
-#define XIP_IRQ     6
-#define PIO0_IRQ_0 7
-#define PIO0_IRQ_1 8
-#define PIO1_IRQ_0 9
-#define PIO1_IRQ_1 10
-#define DMA_IRQ_0 11
-#define DMA_IRQ_1 12
-#define GPIO_BANK0_IRQ 13
-#define GPIO_QSPI_IRQ 14 
-#define FIFO_CORE0_IRQ 15
-#define FIFO_CORE1_IRQ 16
-#define CLOCKS_IRQ 17
-#define SPI0_IRQ 18
-#define SPI1_IRQ 19
-#define UART0_IRQ 20
-#define UART1_IRQ 21
-#define ADC_FIFO_IRQ 22
-#define I2C0_IRQ 23
-#define I2C1_IRQ 24
-#define RTC_IRQ 25
+#define TIMER_IRQ_0         0
+#define TIMER_IRQ_1         1
+#define TIMER_IRQ_2         2
+#define TIMER_IRQ_3         3
+#define PWM_IRQ             4
+#define USB_IRQ             5
+#define XIP_IRQ             6
+#define PIO0_IRQ_0          7
+#define PIO0_IRQ_1          8
+#define PIO1_IRQ_0          9
+#define PIO1_IRQ_1          10
+#define DMA_IRQ_0           11
+#define DMA_IRQ_1           12
+#define GPIO_BANK0_IRQ      13
+#define GPIO_QSPI_IRQ       14 
+#define FIFO_CORE0_IRQ      15
+#define FIFO_CORE1_IRQ      16
+#define CLOCKS_IRQ          17
+#define SPI0_IRQ            18
+#define SPI1_IRQ            19
+#define UART0_IRQ           20
+#define UART1_IRQ           21
+#define ADC_FIFO_IRQ        22
+#define I2C0_IRQ            23
+#define I2C1_IRQ            24
+#define RTC_IRQ             25
 
 
 static inline void NVIC_EnableIRQ(uint32_t irq_number) {
