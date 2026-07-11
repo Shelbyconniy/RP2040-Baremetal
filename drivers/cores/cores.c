@@ -1,6 +1,5 @@
 #include "cores.h"
 #include "mailbox.h"
-#include "interrupts.h"
 
 void core1_start(uint32_t *vector_table, uint32_t *stack_pointer, void (*func_ptr) (void)) {
 
