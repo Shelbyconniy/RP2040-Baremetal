@@ -33,10 +33,6 @@
 //      [0] Enable
 #define REGION_SIZE(X)  (X << 1)
 #define NO_EXECUTE      (1UL << 28)
-#define NO_ACCESS       0x000
-#define RO_ACCESS
-#define WO_ACCESS
-#define WR_ACCESS
 #define SHAREABLE       (1UL << 18)
 #define CACHEABLE       (1UL << 17)
 #define BUFFERABLE      (1UL << 16)
