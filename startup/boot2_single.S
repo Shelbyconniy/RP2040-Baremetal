@@ -5,7 +5,7 @@
 
 .section .boot2, "ax"
 
-.extern _stack0_st
+.extern _stack0_top
 .extern Reset_Handler
 
 .equ qspi_base,     0x40020000
@@ -81,7 +81,7 @@ boot2:
     str r1, [r0, #0x08]
     
     @ set SP
-    ldr r0, =_stack0_st
+    ldr r0, =_stack0_top
     msr msp, r0
 
     @ call Reset_Handler
