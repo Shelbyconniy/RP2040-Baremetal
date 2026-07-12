@@ -30,10 +30,8 @@ void sleep_us(uint32_t delay, uint32_t alarm) {
 
 void Timer0_IRQHandler() {
     mmio_write_32(TIME_INTR, (1 << 0));
-    NVIC_ClearPendingIRQ(TIMER_IRQ_0);
 }
 
 void Timer1_IRQHandler() {
     mmio_write_32(TIME_INTR, (1 << 1));
-    NVIC_ClearPendingIRQ(TIMER_IRQ_1);
 }
