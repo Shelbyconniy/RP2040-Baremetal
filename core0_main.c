@@ -31,7 +31,7 @@ void core0_main()
     /* Init core 1 */
     core1_start(VECTOR_TABLE_DEFAULT, STACK1_DEFAULT, core1_main);
 
-    /* Inter-core synchronization*/
+    /* Inter-core synchronization */
     mailbox_sync_master();
 
     while (1) {
