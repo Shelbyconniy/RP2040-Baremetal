@@ -20,7 +20,7 @@ void core1_main() {
     /* Enable ALARM1 in NVIC */
     NVIC_EnableIRQ(TIMER_IRQ_1);
 
-    /* Inter-core synchronization*/
+    /* Inter-core synchronization */
     mailbox_sync_slave();
 
     while (1) {
