@@ -26,6 +26,8 @@ static inline void invertBits(uint32_t addr, uint32_t value) {
     mmio_write_32(addr + XOR_OFFSET, value);
 }
 
+/* Cortex-M barriers */
+
 static inline void __DMB() {
     asm volatile ("dmb" : : : "memory");
 }
