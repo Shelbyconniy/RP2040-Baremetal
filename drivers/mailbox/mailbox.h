@@ -37,8 +37,7 @@ static inline void mailbox_send(uint32_t data) {
 
 static inline void mailbox_send_blocking(uint32_t data) {
     while (!(mmio_read_32(FIFO_STATUS_REG) & (1 << 1)));
-    mmio_write_32(FIFO_TX_REG, data);
-    __SEV();
+    mailbox_send(data);
 }
 
 static inline void mailbox_clear() {
